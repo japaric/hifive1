@@ -1,0 +1,16 @@
+[package]
+authors = ["Jorge Aparicio <jorge@japaric.io>"]
+edition = "2018"
+name = "quickstart"
+publish = false
+version = "0.0.0-alpha.0"
+
+[dev-dependencies]
+heapless = "0.5.0-alpha.2"
+hifive1 = { path = "../hifive1" }
+panic-ebreak = { path = "../panic" }
+riscv = { path = "../riscv" }
+rt = { path = "../rt" }
+semihosting = { path = "../semihosting" }
+ufmt = "0.1.0-beta.4"
+ufmt-utils = "0.1.0-alpha.1"

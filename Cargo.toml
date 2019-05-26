@@ -1,0 +1,17 @@
+[profile.release]
+codegen-units = 1
+debug = true
+lto = true
+opt-level = "z"
+
+[workspace]
+members = [
+  "hifive1",
+  "panic",
+  "quickstart",
+  "riscv",
+  "rt",
+  "rtfm",
+  "rtfm/macros",
+  "semihosting",
+]

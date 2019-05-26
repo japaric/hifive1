@@ -1,0 +1,14 @@
+[package]
+authors = ["Jorge Aparicio <jorge@japaric.io>"]
+edition = "2018"
+name = "rt"
+publish = false
+version = "0.0.0-alpha.0"
+
+[dependencies]
+hifive1 = { path = "../hifive1" }
+r0 = "0.2.2"
+riscv = { path = "../riscv" }
+semihosting = { path = "../semihosting" }
+ufmt = "0.1.0-beta.4"
+ufmt-utils = "0.1.0-alpha.1"

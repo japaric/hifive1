@@ -1,0 +1,9 @@
+[package]
+authors = ["Jorge Aparicio <jorge@japaric.io>"]
+edition = "2018"
+name = "hifive1"
+publish = false
+version = "0.0.0-alpha.0"
+
+[dependencies]
+bare-metal = "0.2.4"
