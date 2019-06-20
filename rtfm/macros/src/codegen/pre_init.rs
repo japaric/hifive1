@@ -1,9 +1,6 @@
 use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
-use rtfm_syntax::{
-    analyze::Analysis,
-    ast::{App, HardwareTaskKind},
-};
+use rtfm_syntax::{analyze::Analysis, ast::App};
 
 use crate::codegen::util;
 
@@ -12,7 +9,7 @@ pub fn codegen(app: &App, analysis: &Analysis) -> Vec<TokenStream2> {
     let mut stmts = vec![];
 
     // populate the `FreeQueue`s
-    for (name, senders) in &analysis.free_queues {
+    for (name, _) in &analysis.free_queues {
         let task = &app.software_tasks[name];
         let cap = task.args.capacity;
 
@@ -24,8 +21,8 @@ pub fn codegen(app: &App, analysis: &Analysis) -> Vec<TokenStream2> {
     }
 
     // unmask interrupts and set their priorities
-    for (name, task) in app.hardware_tasks.iter() {
-        let interrupt = task.args.binds(name);
+    for task in app.hardware_tasks.values() {
+        let interrupt = &task.args.binds;
         let priority = task.args.priority - if app.software_tasks.is_empty() { 0 } else { 1 };
 
         stmts.push(quote!(

@@ -1,7 +1,7 @@
 use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
 use rtfm_syntax::{
-    analyze::{Analysis, Location, Ownership},
+    analyze::{Analysis, Ownership},
     ast::App,
 };
 
@@ -20,7 +20,7 @@ pub fn codegen(
     let mut const_app = vec![];
     let mut mod_resources = vec![];
 
-    for (name, res, expr, loc) in app.resources(analysis) {
+    for (name, res, expr, _) in app.resources(analysis) {
         let cfgs = &res.cfgs;
         let ty = &res.ty;
 

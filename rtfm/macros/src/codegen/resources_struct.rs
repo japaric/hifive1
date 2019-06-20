@@ -143,8 +143,6 @@ pub fn codegen(
         }
     }
 
-    let core = ctxt.core(app);
-    let cores = app.args.cores;
     let doc = format!("Resources `{}` has access to", ctxt.ident(app));
     let ident = util::resources_ident(ctxt, app);
     let item = quote!(

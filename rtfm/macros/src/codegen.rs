@@ -42,7 +42,7 @@ pub fn app(app: &App, analysis: &Analysis) -> TokenStream2 {
 
     let const_app_dispatcher = dispatcher::codegen(app, analysis);
 
-    let const_app_spawn = spawn::codegen(app, analysis);
+    let const_app_spawn = spawn::codegen(app);
 
     let const_app_timer_queue = timer_queue::codegen(app, analysis);
 

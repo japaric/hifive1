@@ -2,8 +2,6 @@ use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
 use rtfm_syntax::{analyze::Analysis, ast::App};
 
-use crate::codegen::util;
-
 /// Generates code that runs after `#[init]` returns
 pub fn codegen(app: &App, analysis: &Analysis) -> Vec<TokenStream2> {
     // single-core mode

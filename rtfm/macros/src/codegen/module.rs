@@ -216,7 +216,7 @@ pub fn codegen(ctxt: Context, resources_tick: bool, app: &App) -> TokenStream2 {
                         self.priority
                     }
 
-                    // #instant_method
+                    #instant_method
                 }
             ));
         }

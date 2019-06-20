@@ -1,5 +1,4 @@
-// #![deny(warnings)]
-#![allow(warnings)]
+#![deny(warnings)]
 #![recursion_limit = "128"]
 
 extern crate proc_macro;
@@ -9,22 +8,18 @@ use std::{fs, path::Path};
 
 use rtfm_syntax::Settings;
 
-mod codegen;
 mod check;
+mod codegen;
 
 #[proc_macro_attribute]
 pub fn app(args: TokenStream, input: TokenStream) -> TokenStream {
-    let (app, analysis) = match rtfm_syntax::parse(
-        args,
-        input,
-        Settings {
-            parse_extern_interrupt: true,
-            parse_interrupt: true,
-            parse_schedule: true,
-            optimize_priorities: true,
-            ..Settings::default()
-        },
-    ) {
+    let mut settings = Settings::default();
+    settings.parse_extern_interrupt = true;
+    settings.parse_binds = true;
+    settings.parse_schedule = true;
+    settings.optimize_priorities = true;
+
+    let (app, analysis) = match rtfm_syntax::parse(args, input, settings) {
         Err(e) => return e.to_compile_error().into(),
         Ok(x) => x,
     };

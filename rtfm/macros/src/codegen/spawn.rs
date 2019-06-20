@@ -2,12 +2,12 @@ use std::collections::{BTreeMap, HashSet};
 
 use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
-use rtfm_syntax::{analyze::Analysis, ast::App};
+use rtfm_syntax::ast::App;
 
 use crate::codegen::{spawn_body, util};
 
 /// Generates all `${ctxt}::Spawn` methods
-pub fn codegen(app: &App, analysis: &Analysis) -> Vec<TokenStream2> {
+pub fn codegen(app: &App) -> Vec<TokenStream2> {
     let mut items = vec![];
 
     let mut seen = BTreeMap::<u8, HashSet<_>>::new();
@@ -27,7 +27,7 @@ pub fn codegen(app: &App, analysis: &Analysis) -> Vec<TokenStream2> {
                 // `init` uses a special spawn implementation; it doesn't use the `spawn_${name}`
                 // functions which are shared by other contexts
 
-                let body = spawn_body::codegen(spawner, &name, app, analysis);
+                let body = spawn_body::codegen(spawner, &name, app);
 
                 let let_instant = if app.uses_schedule(receiver) {
                     Some(quote!(let instant = unsafe { rtfm::Instant::artificial(0) };))
@@ -55,7 +55,7 @@ pub fn codegen(app: &App, analysis: &Analysis) -> Vec<TokenStream2> {
                         None
                     };
 
-                    let body = spawn_body::codegen(spawner, &name, app, analysis);
+                    let body = spawn_body::codegen(spawner, &name, app);
 
                     items.push(quote!(
                         #(#cfgs)*

@@ -55,7 +55,7 @@ const APP: () = {
         loop {}
     }
 
-    #[interrupt(binds = GPIO18, resources = [SHARED], priority = 1)]
+    #[task(binds = GPIO18, resources = [SHARED], priority = 1)]
     fn dig2(c: dig2::Context) {
         // clear interrupt flag
         gpio::set_rise_ip(gpio::DIG2);
@@ -70,7 +70,7 @@ const APP: () = {
         }
     }
 
-    #[interrupt(binds = GPIO20, priority = 2)]
+    #[task(binds = GPIO20, priority = 2)]
     fn dig4(_: dig4::Context) {
         // clear interrupt flag
         gpio::set_rise_ip(gpio::DIG4);

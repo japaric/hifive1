@@ -2,7 +2,7 @@ use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
 use rtfm_syntax::{analyze::Analysis, ast::App, Context};
 
-use crate::codegen::{locals, module, resources_struct, util};
+use crate::codegen::{locals, module, resources_struct};
 
 /// Generates support code for `#[idle]` functions
 pub fn codegen(

@@ -81,7 +81,6 @@ pub fn codegen(app: &App, analysis: &Analysis) -> Vec<TokenStream2> {
 
                     let cfgs = &task.cfgs;
                     let priority = task.args.priority;
-                    let receiver = task.args.core;
                     let rq = util::rq_ident(priority);
                     let rqt = util::spawn_t_ident(priority);
 

@@ -2,7 +2,7 @@ use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
 use rtfm_syntax::{analyze::Analysis, ast::App, Context};
 
-use crate::codegen::{locals, module, resources_struct, util};
+use crate::codegen::{locals, module, resources_struct};
 
 /// Generate support code for hardware tasks (`#[exception]`s and `#[interrupt]`s)
 pub fn codegen(
@@ -42,7 +42,7 @@ pub fn codegen(
             quote!(#name::Locals::new(),)
         };
 
-        let symbol = task.args.binds(name);
+        let symbol = &task.args.binds;
 
         let plic_priority = task.args.priority - if app.software_tasks.is_empty() { 0 } else { 1 };
 

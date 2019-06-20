@@ -1,17 +1,27 @@
 use proc_macro2::TokenStream as TokenStream2;
 use quote::quote;
-use rtfm_syntax::{analyze::Analysis, ast::App, Context};
+use rtfm_syntax::{ast::App, Context};
 use syn::Ident;
 
 use crate::codegen::util;
 
-pub fn codegen(spawner: Context, name: &Ident, app: &App, analysis: &Analysis) -> TokenStream2 {
-    let sender = spawner.core(app);
+pub fn codegen(spawner: Context, name: &Ident, app: &App) -> TokenStream2 {
+    // single-core mode
+    let core = 0;
+
     let spawnee = &app.software_tasks[name];
     let priority = spawnee.args.priority;
-    let receiver = spawnee.args.core;
 
-    let instants = util::instants_ident(name);
+    let write_instant = if app.uses_schedule(core) {
+        let instants = util::instants_ident(name);
+
+        Some(quote!(
+            #instants.get_unchecked_mut(usize::from(index)).as_mut_ptr().write(instant);
+        ))
+    } else {
+        None
+    };
+
     let t = util::spawn_t_ident(priority);
     let fq = util::fq_ident(name);
     let rq = util::rq_ident(priority);
@@ -39,7 +49,7 @@ pub fn codegen(spawner: Context, name: &Ident, app: &App, analysis: &Analysis) -
             if let Some(index) = #dequeue {
                 #inputs.get_unchecked_mut(usize::from(index)).as_mut_ptr().write(input);
 
-                #instants.get_unchecked_mut(usize::from(index)).as_mut_ptr().write(instant);
+                #write_instant
 
                 #enqueue
 

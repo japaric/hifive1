@@ -69,7 +69,7 @@ const APP: () = {
         }
     }
 
-    #[interrupt(binds = GPIO18, priority = 2)]
+    #[task(binds = GPIO18, priority = 2)]
     fn dig2(_: dig2::Context) {
         // clear interrupt flag
         gpio::set_rise_ip(gpio::DIG2);
